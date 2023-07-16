@@ -13,7 +13,7 @@ PWM is a type of protocol used with binary digital signals. It is used to simula
 
 The duty cycle of a PWM is the data you are sending, in the form of a percentage high.
 
-![](C:\Users\ansha\Projects\Training\Week-2\assets\week2_1.png)
+![](assets/week2_1.png)
 
 Exercise 2 from Week 1 was a very basic PWM signal generator controlling the LED.
 
