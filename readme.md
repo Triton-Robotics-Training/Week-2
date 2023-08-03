@@ -15,8 +15,51 @@ The duty cycle of a PWM is the data you are sending, in the form of a percentage
 
 ![](assets/week2_1.png)
 
-Exercise 2 from Week 1 was a very basic PWM signal generator controlling the LED.
+In fact, you've already done a very simple PWM. Exercise 2 from Week 1 was a very basic PWM signal generator controlling the LED. 
+
+PWM is used to control servos and some motors, but we specifically don't use PWM anymore, as we have switched to all CAN control for the motors we use.
 
 ## Serial (UART)
 
-Serial, or UART, is a single pin protocol that operates on a pre-defined clock. You will often use two data pins however, as one is TX (transmitting), and one is RX (recieving). 
+Serial, or UART, is a dual pin protocol that operates on a pre-defined clock. You will sometimes use one data pin however, as one is TX (transmitting), and one is RX (recieving). You will not always need to both transmit and recieve. For example, with the radio we use, we only recieve data, so we don't have a TX pin for that. 
+
+##### Baud
+
+The baud rate specifies how fast data is sent over a serial line. It's usually expressed in units of bits-per-second (bps). One of the most default baud rates is 9600, and another one that is used often is 115200, but bauds can be anything, as long as its consistent.
+
+Baud matters VERY MUCH. If you have inconsistent Baud rates, that means that you're sending at a different rate than the reciever is recieving, so your data will look very very different.
+
+![](assets/week2_3.png)
+
+| Clock                 | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  | 12  | 13  | 14  | 15  | 16  | 17  | 18  | 19  | 20  | 21  | 22  | 23  | 24  | Message |
+| --------------------- | --- |:--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ------- |
+| Sending - Baud 2000   | 0   | 1   | 0   | 0   | 1   | 0   | 0   | 0   | 0   | 1   | 1   | 0   | 1   | 0   | 0   | 1   | 0   | 0   | 1   | 0   | 0   | 0   | 0   | 1   | Hi!     |
+| Recieving - Baud 1000 | 0   |     | 0   |     | 1   |     | 0   |     | 0   |     | 1   |     | 1   |     | 0   |     | 0   |     | 1   |     | 0   |     | 0   |     | d?      |
+
+In this example, we are attempting to send the message "Hi!"
+With the recieving baud as only half of the sending baud, we only actually capture the first half of of the bits, so the message we get is a lowercase d, and then the message ends with an incomplete four bits at the end
+
+This is an very common way that we've had issues in the past, if we have baud's even slightly off, you can very quickly desync the clocks and begin getting pure garbage. We had an issue for a month where we had a baud of 115200 that instead should have been 100000. We had data that was so close to being good but was simply unusable.
+
+This link will describe the intricacies of the [Serial Protocol in detail](serial.md) , if you'd like to learn more about the specifics of the protocol and what a packet consists of.
+
+One thing to keep in mind is that in use, the TX of one endpoint is the RX of the other.
+
+<img src="assets\week2_2.png" title="" alt="Serial Communication - SparkFun Learn" width="238">
+
+# Exercise #1
+
+Take the starter code given in [](controlledblinky.cpp). 
+A number of helper functions have been given to you, such as 
+
+- **putc** (put a character into the output stream)
+
+- **letterToNumber** (given a letter, returns its corresponding index in the alphabet) 
+
+- **letterToNumber** (given an index in the alphabet, returns the corresponding letter)
+  
+  `a` is `0`, `b` is `1`, all the way to `z` being `25`.
+
+Your task is to implement a simple, lowercase only caesar cipher, the input string has been given at the top, and using that and any of the functions given *and any more you may want to construct*, simply print out the message, shifted one forward (a becomes b, b becomes c, h becomes i, etc.)
+
+**KEY THING TO REMEMBER**, remember that using putc or printf, nothing will show unless you have a newline at the end, thats what flushes the internal buffer to the screen. Without a newline, nothing will print.
