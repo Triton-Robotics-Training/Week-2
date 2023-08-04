@@ -76,7 +76,7 @@ Data frames are received by all devices, including by the transmitting device.
 
 Here, we can see that we have multiple nodes connected in parallel to one bus. There are two wires of importance here, the CAN high (RED) and CAN low (BLACK).
 
-![](C:\Users\ansha\AppData\Roaming\marktext\images\2023-08-03-20-39-08-image.png)
+![](assets/week2_4.png)
 
 #### CAN Overall Concept
 
@@ -90,9 +90,25 @@ The CAN line delivers the mail to the home, and while all four recieve the mail,
 Lets say we have 5 packets coming in, as such
 
 | Address | Message  | Content |
-|---------|----------|---------|
+| ------- | -------- | ------- |
 | 0x20a   | 00101000 | 40      |
 | 0x20b   | 10111010 | -70     |
 | 0x20a   | 00001010 | 10      |
 | 0x20c   | 11111011 | -5      |
 | 0x200   | 10101000 | -88     |
+
+Each packet is adressed to a specific person. Alice reads the messages adressed to 0x20a, Bob the messages adressed to 0x20b, and so on. Alice has two messages, Bob has one, Carol has one message, and the final message is adressed so 0x200, which in this case, applies to all of them. Depending on how you write your code, it could also apply to none of them. Ultimately, the people (Nodes) determine whether or not a message applies to them, and what to do with that.
+
+An example that is more specific to our robots and our situation. All the motors we use send constant feedback messages to our main board in the format as such:
+The address is `0x200 + id of the motor`, so motor 1 will send on `0x201`, motor 5 on `0x205`, and motor 11 on `0x20b`.
+
+| Address | Byte 1   | Byte 2   | Byte 3   | Byte 4   | Byte 5   | Byte 6   | Byte 7   |
+| ------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0x201   | 00010100 | 00010100 | 11111111 | 11000100 | 00000000 | 01010000 | 00100010 |
+
+Each message contains 7 bytes of importance, paired up into 4 16-bit integers. Above you can see an example message, and below is how the bits pair up importantly.
+
+| Address | Byte 1+2      (ANGLE) | Byte 3+4 (VELOCITY) | Byte 5+6    (TORQUE_CURRENT) | Byte 7 (TEMPERATURE) |
+| ------- | --------------------- | ------------------- | ---------------------------- | -------------------- |
+| 0x201   | 00010100_00010100     | 11111111_11000100   | 00000000_01010000            | 00100010             |
+|         | 5140 ticks            | -60 RPM             | 80                           | 34C                  |
