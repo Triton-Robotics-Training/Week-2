@@ -7,7 +7,7 @@ On our board, the nucleo, we have several pins designated, and broken out on our
 
 With microcontrollers like our nucleo and the arduino, specific pins can be used for specific purposes. For example, as you can see in the diagram above, the top-left most pin, PC_10, can be used for SPI3_SCK and UART3_TX, we use it for UART3_TX, to communicate with the referee system.
 
-## PWM (Pulse Width Modulation)
+# PWM (Pulse Width Modulation)
 
 PWM is a type of protocol used with binary digital signals. It is used to simulate an analog output with a digital. We simply control how long the signal is high. You may see similarities to Exercise 2 from last week. 
 
@@ -19,11 +19,11 @@ In fact, you've already done a very simple PWM. Exercise 2 from Week 1 was a ver
 
 PWM is used to control servos and some motors, but we specifically don't use PWM anymore, as we have switched to all CAN control for the motors we use.
 
-## Serial (UART)
+# Serial (UART)
 
 Serial, or UART, is a dual pin protocol that operates on a pre-defined clock. You will sometimes use one data pin however, as one is TX (transmitting), and one is RX (recieving). You will not always need to both transmit and recieve. For example, with the radio we use, we only recieve data, so we don't have a TX pin for that. 
 
-##### Baud
+#### Baud
 
 The baud rate specifies how fast data is sent over a serial line. It's usually expressed in units of bits-per-second (bps). One of the most default baud rates is 9600, and another one that is used often is 115200, but bauds can be anything, as long as its consistent.
 
@@ -63,3 +63,36 @@ A number of helper functions have been given to you, such as
 Your task is to implement a simple, lowercase only caesar cipher, the input string has been given at the top, and using that and any of the functions given *and any more you may want to construct*, simply print out the message, shifted one forward (a becomes b, b becomes c, h becomes i, etc.)
 
 **KEY THING TO REMEMBER**, remember that using putc or printf, nothing will show unless you have a newline at the end, thats what flushes the internal buffer to the screen. Without a newline, nothing will print.
+
+# CAN (Controller Area Network)
+
+Can is a unique communication protocol in that it is made for a large number of devices to all be connected in parallel, and is made for distance and minimal interference, provided that it is set up correctly.
+
+For each device, the data in a frame is transmitted serially but in such a way that if more than one device transmits at the same time, transmission delay is employed to ensure that every node receives the data.
+
+Data frames are received by all devices, including by the transmitting device.
+
+#### CAN Wiring Diagram
+
+Here, we can see that we have multiple nodes connected in parallel to one bus. There are two wires of importance here, the CAN high (RED) and CAN low (BLACK).
+
+![](C:\Users\ansha\AppData\Roaming\marktext\images\2023-08-03-20-39-08-image.png)
+
+#### CAN Overall Concept
+
+The easiest way to express can is the analogy of a mailbox.
+
+The key feature of CAN is that each message packet contains more than just data, it comes with an adress as well.
+
+Lets say we have 4 people living in a home, Alice, Bob, Carol, and Dan.
+
+The CAN line delivers the mail to the home, and while all four recieve the mail, the respective inhabitants will only act on the mail that is relevant to them.
+Lets say we have 5 packets coming in, as such
+
+| Address | Message  | Content |
+|---------|----------|---------|
+| 0x20a   | 00101000 | 40      |
+| 0x20b   | 10111010 | -70     |
+| 0x20a   | 00001010 | 10      |
+| 0x20c   | 11111011 | -5      |
+| 0x200   | 10101000 | -88     |
