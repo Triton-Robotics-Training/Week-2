@@ -53,12 +53,14 @@ To produce the parity bit, all 5-9 bits of the data byte are added up, and the e
 
 Ex. Parity is set to even and is being added to a data byte like 0b01011101, which has an odd number of 1's (5). The parity bit would be set to 1. Conversely, if the parity mode was set to odd, the parity bit would be 0.
 
+You can read more about parity bits [here](https://en.wikipedia.org/wiki/Parity_bit)
+
 ## Example
 
 Note: This example uses 9600 8N1 - 9600 baud, 8 data bits, no parity, and 1 stop bit.
 
 A device transmitting the ASCII characters 'O' and 'K' would have to create two packets of data. The ASCII value of O (that's uppercase) is 79, which breaks down into an 8-bit binary value of 01001111, while K's binary value is 01001011. All that's left is appending sync bits.
 
-It isn't specifically stated, but it’s assumed that data is transferred least-significant bit first. Notice how each of the two bytes is sent as it reads from right-to-left.
+It isn't specifically stated, but it’s assumed that data is transferred [least-significant](https://en.wikipedia.org/wiki/Bit_numbering) bit first. Notice how each of the two bytes is sent as it reads from right-to-left.
 
 ![](https://lh3.googleusercontent.com/-e1Ck4hchEjeV0s458IUWHxWALPnL4F8lMTA6o2QpVvqk4M5-5mPTxPekRuHyBzjMnocYCYTYnoD7axdjrX4xwuJUsKsNaMtBTpwMXChB5wRLZ41mhpbUilArZVijhWHRvtH9O2Ns-vB3SL7pfn-b9HzM1i3SH55=s2048)
