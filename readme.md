@@ -37,9 +37,9 @@ Baud matters VERY MUCH. If you have inconsistent Baud rates, that means that you
 | Recieving - Baud 1000 | 0   |     | 0   |     | 1   |     | 0   |     | 0   |     | 1   |     | 1   |     | 0   |     | 0   |     | 1   |     | 0   |     | 0   |     | d?      |
 
 In this example, we are attempting to send the message "Hi!"
-With the recieving baud as only half of the sending baud, we only actually capture the first half of of the bits, so the message we get is a lowercase d, and then the message ends with an incomplete four bits at the end
+With the recieving baud as only half of the sending baud, we only actually capture the first half of the bits, so the message we get is a lowercase d, and then the message ends with an incomplete four bits at the end
 
-This is an very common way that we've had issues in the past, if we have baud's even slightly off, you can very quickly desync the clocks and begin getting pure garbage. We had an issue for a month where we had a baud of 115200 that instead should have been 100000. We had data that was so close to being good but was simply unusable.
+This is a very common way that we've had issues in the past, if we have baud's even slightly off, you can very quickly desync the clocks and begin getting pure garbage. We had an issue for a month where we had a baud of 115200 that instead should have been 100000. We had data that was so close to being good but was simply unusable.
 
 This link will describe the intricacies of the [Serial Protocol in detail](serial.md) , if you'd like to learn more about the specifics of the protocol and what a packet consists of.
 
@@ -49,7 +49,7 @@ One thing to keep in mind is that in use, the TX of one endpoint is the RX of th
 
 # Exercise #1
 
-Take the starter code given in [](controlledblinky.cpp). 
+Take the starter code given in [shiftcipher.cpp](https://github.com/Triton-Robotics-Training/Week-2/blob/main/shiftcipher.cpp). 
 A number of helper functions have been given to you, such as 
 
 - **putc** (put a character into the output stream)
@@ -82,7 +82,7 @@ Here, we can see that we have multiple nodes connected in parallel to one bus. T
 
 The easiest way to express can is the analogy of a mailbox.
 
-The key feature of CAN is that each message packet contains more than just data, it comes with an adress as well.
+The key feature of CAN is that each message packet contains more than just data, it comes with an address as well.
 
 Lets say we have 4 people living in a home, Alice, Bob, Carol, and Dan.
 
