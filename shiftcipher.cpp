@@ -20,7 +20,7 @@ int letterToNumber(char c){
 
 //returns a letter to the corresponding number
 //a is 0, b is 1, all the way to z is 25
-char numberToLetter(int i){ 
+char numberToLetter(char i){ 
     return i + 'a';
 }
 
