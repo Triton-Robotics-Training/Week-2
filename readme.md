@@ -99,6 +99,8 @@ Lets say we have 5 packets coming in, as such
 
 Each packet is adressed to a specific person. Alice reads the messages adressed to 0x20a, Bob the messages adressed to 0x20b, and so on. Alice has two messages, Bob has one, Carol has one message, and the final message is adressed so 0x200, which in this case, applies to all of them. Depending on how you write your code, it could also apply to none of them. Ultimately, the people (Nodes) determine whether or not a message applies to them, and what to do with that.
 
+#### Robot-specifics
+
 An example that is more specific to our robots and our situation. All the motors we use send constant feedback messages to our main board in the format as such:
 The address is `0x200 + id of the motor`, so motor 1 will send on `0x201`, motor 5 on `0x205`, and motor 11 on `0x20b`.
 
@@ -112,3 +114,5 @@ Each message contains 7 bytes of importance, paired up into 4 16-bit integers. A
 | ------- | --------------------- | ------------------- | ---------------------------- | -------------------- |
 | 0x201   | 00010100_00010100     | 11111111_11000100   | 00000000_01010000            | 00100010             |
 |         | 5140 ticks            | -60 RPM             | 80                           | 34C                  |
+
+This message coming from the motor on ID 1 is telling us, the board, that the motor is rotated 5140 ticks, which directly corresponds to an angle out of 360, that it is moving at -60RPM, the amount of torque on the motor is 80 (We don't know what units these are in.), and that the motor is currently 34 Degrees Celsius.
