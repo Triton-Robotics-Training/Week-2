@@ -4,7 +4,7 @@
 
 static DigitalOut led(LED1);
 
-static char inputString[] = "embeddedmarinarasauce";
+static char inputString[] = "zestyembeddedmarinarasauce"; //this test string should output aftuzfncfeefenbsjobsbtbvdf
 
 //puts a character into the output buffer
 //remember that nothing will show until you print a newline.
