@@ -56,7 +56,7 @@ A number of helper functions have been given to you, such as
 
 - **letterToNumber** (given a letter, returns its corresponding index in the alphabet) 
 
-- **letterToNumber** (given an index in the alphabet, returns the corresponding letter)
+- **numberToLetter** (given an index in the alphabet, returns the corresponding letter)
   
   `a` is `0`, `b` is `1`, all the way to `z` being `25`.
 
