@@ -129,8 +129,24 @@ As you can see, when the slew rate is too fast, the output becomes unstable. We 
 
 # I2C
 
-I2C is a two-pin protocol, and is an address-based protocol. It has two main pins of communication, SCL/SCK, which is the clock pin and, SDA, the data pin. The clock's rising edge (when it goes high) determines when the code actually attempts to read the data pin.
+I2C is a two-pin protocol, and is an address-based protocol. It's two main pins are communication, SCL/SCK, which is the clock pin and, SDA, the data pin. The clock's rising edge (when it goes high) determines when the code actually attempts to read the data pin.
 
 ![](assets/week2_5.jpg)
 
 As you can see, the data is sampled only when the clock goes high, and the clock only goes high after the data signal is definitively where it needs to be.
+
+I2C, being address based, can basically control a number of devices (up to a theoretical 128) with only two pins, as such:
+
+![](assets/week2_7.png) 
+
+If you'd like to learn more about I2C, you can do so [here](https://learn.sparkfun.com/tutorials/i2c).
+
+# SPI
+
+SPI is a four-pin protocol. It's four pins are PICO or MISO (Peripheral In Controller Out), POCI or MOSI (Peripheral Out Controller In), SCK or SCL (Clock), and CS (Chip select). The PICO and POCI pins are data pins, and the fact that there are two of them means that you can have bidirectional communications. The SCK clock pin operates the same as in I2C, where it goes high when the data is ready to be read. The special thing about SPI is that it is not adress-based like I2C, however it still allows communication with multiple devices.
+
+![](assets/week2_8.png)
+
+This is the standard way to wire SPI, where you have a shared SCK, PICO, and POCI, but each device has its own CS. This means you cant interact with multiple devices at the same time, but as a result it is much simpler of a protocol than I2C and CAN, and more noise immune.
+
+If you'd like to learn more about SPI, you can do so [here](https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi).
