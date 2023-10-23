@@ -17,7 +17,7 @@ The duty cycle of a PWM is the data you are sending, in the form of a percentage
 
 In fact, you've already done a very simple PWM. Exercise 2 from Week 1 was a very basic PWM signal generator controlling the LED. 
 
-PWM is used to control servos and some motors, but we specifically don't use PWM anymore, as we have switched to all CAN control for the motors we use.
+PWM is used to control servos and some motors, but we specifically don't use PWM very much anymore, as we have switched to all CAN control for the motors we use.
 
 # Serial (UART)
 
@@ -72,6 +72,8 @@ For each device, the data in a frame is transmitted serially but in such a way t
 
 Data frames are received by all devices, including by the transmitting device.
 
+CAN is a VERY HIGH FREQUENCY communication protocol, which means its slew rate is pretty important. Slew rate is the time it takes for a signal to go from high to low and vice-versa. The faster the slew rate, the faster you can run your protocol (Lowering the transition time allows you to increase the rate of transmission), however the faster it is, the less stable the signal is. We discuss this [later](#slew-rate). We have designed boards to help us tune the most optimal slew rate for our robots.
+
 #### CAN Wiring Diagram
 
 Here, we can see that we have multiple nodes connected in parallel to one bus. There are two wires of importance here, the CAN high (RED) and CAN low (BLACK).
@@ -116,3 +118,19 @@ Each message contains 7 bytes of importance, paired up into 4 16-bit integers. A
 |         | 5140 ticks            | -60 RPM             | 80                           | 34C                  |
 
 This message coming from the motor on ID 1 is telling us, the board, that the motor is rotated 5140 ticks, which directly corresponds to an angle out of 360, that it is moving at -60RPM, the amount of torque on the motor is 80 (We don't know what units these are in.), and that the motor is currently 34 Degrees Celsius.
+
+#### Slew Rate
+
+This is an important location to talk about slew rate again. That delay is something that doesn't affect us at low frequencies, but the faster we send data, the more it matters, and the steeper the slew rate, the more unstable the protocol becomes, as the fast switching causes and is more susceptible to electro-static interference.
+
+![](assets/week2_6.png)
+
+As you can see, when the slew rate is too fast, the output becomes unstable. We attempt to maintain the balance between speed and stability.
+
+# I2C
+
+I2C is a two-pin protocol, and is an address-based protocol. It has two main pins of communication, SCL/SCK, which is the clock pin and, SDA, the data pin. The clock's rising edge (when it goes high) determines when the code actually attempts to read the data pin.
+
+![](assets/week2_5.jpg)
+
+As you can see, the data is sampled only when the clock goes high, and the clock only goes high after the data signal is definitively where it needs to be.
